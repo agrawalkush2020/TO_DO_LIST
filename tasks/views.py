@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import TaskCreateForm
 from .models import Task
 
@@ -11,9 +11,9 @@ def index(request):
                 task = TaskCreateForm(value=task_added_form.cleaned_data['event'], user=request.user)
                 task.save()
 
-        tasks = Task.objects.set(user=request.user)
+        tasks = Task.objects.filter(user=request.user)
         task_form = TaskCreateForm()
-        return render(request, 'todo/index.html', {"tasks": tasks, "taskform": task_form})
+        return render(request, 'tasks/index.html', {"tasks": tasks, "taskform": task_form})
     else:
         return redirect('invalid', message='User needs to login first to see the tasks')
 

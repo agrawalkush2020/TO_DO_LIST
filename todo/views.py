@@ -1,10 +1,8 @@
 from django.utils import timezone
 from django.shortcuts import redirect, render
-from .models import Task
-from .forms import SignUpForm, loginform, taskform, LoginForm, UserRegistartionForm
+from .forms import LoginForm, UserRegistartionForm
 from django.contrib.sessions.models import Session
 from django.contrib.auth import login
-from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import authenticate, login
 
   
@@ -38,16 +36,4 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'todo/login.html', {'form': form})
-
-def logout(request):
-    try:
-        logged_in_user = LoggedInUser.objects.get(user=request.user)
-        logged_in_user.delete()
-    except LoggedInUser.DoesNotExist:
-        pass
-
-    auth_logout(request)
-    return redirect('login')
-
- 
  
