@@ -1,0 +1,9 @@
+{% extends "todo/base.html" %}
+{% block body %}
+    {% for task in tasks%}
+        {{task.name}} : 
+        {{task.value}}
+        <br/>
+    {% endfor %}
+{%endblock%}
+

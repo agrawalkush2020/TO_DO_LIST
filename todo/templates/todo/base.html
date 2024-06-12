@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav class="shadow-lg">
+        <div class="flex flex-wrap justify-between ml-5 items-center mx-auto px-4 py-2.5">
+            <a href="" class="flex items-center">
+                <img class="h-9 mr-3" src="https://imgs.search.brave.com/PMgdAj2Inquu8dHuo40Mf6CTNo7o13CiunB7ck6YzAg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/aWNvbi1pY29ucy5j/b20vaWNvbnMyLzY1/Ny9QTkcvOTYvQXBw/LTA5X2ljb24taWNv/bnMuY29tXzYwMDAy/LnBuZw" alt="">
+                <span class="self-center text-xml font-semibold">Digital Marketplace</span>
+            </a>
+             
+        </div>
+    </nav>
+    {% block body %}
+
+    {% endblock %}
+</body>
+</html>
