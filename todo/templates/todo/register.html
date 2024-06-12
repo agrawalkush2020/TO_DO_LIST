@@ -8,7 +8,7 @@
         <div class="mb-2">
             <label >Username</label>
             <div class="border rounded py-2 px-2 mr-10">
-                {{ user_form.name }}
+                {{ user_form.username }}
             </div>
         </div>
         <div class="mb-2">
@@ -26,7 +26,7 @@
         <div class="mb-2">
             <label >Confirm Password</label>
             <div class="border rounded py-2 px-2 mr-10">
-                {{ user_form.confirm_password }}
+                {{ user_form.password2 }}
             </div>
         </div>
         <button class="bg-green-500 text-white px-4 py-2" type="submit">Create user</button>
@@ -34,3 +34,8 @@
      <p class="m-10"> Already registered ? <span> <a class="text-indigo-500" href="{% url 'login' %}">Click here</a> to login</p></span>
 </div>
 {% endblock %}
+
+<div class="mb-2">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="">Email</label>
+    <div class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10"> {{ user_form.email }}</div>
+</div>

@@ -6,15 +6,15 @@
      <form class="shadow-lg p-10" method="POST">
         {% csrf_token %}
         <div class="mb-2">
-            <label >Email</label>
+            <label >Username</label>
             <div class="border rounded py-2 px-2 mr-10">
-                {{ user_form.email }}
+                {{ form.username }}
             </div>
         </div>
         <div class="mb-2">
             <label >Password</label>
             <div class="border rounded py-2 px-2 mr-10">
-                {{ user_form.password }}
+                {{ form.username }}
             </div>
         </div>
         <button class="bg-green-500 text-white px-4 py-2" type="submit">Enter</button>

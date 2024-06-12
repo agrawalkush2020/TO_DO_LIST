@@ -1,62 +1,53 @@
+from django.utils import timezone
 from django.shortcuts import redirect, render
-from django.contrib.auth.forms import UserCreationForm
-from .models import Task,User
-from .forms import SignUpForm, loginform, taskform
-from django.contrib.auth.hashers import make_password, check_password
+from .models import Task
+from .forms import SignUpForm, loginform, taskform, LoginForm, UserRegistartionForm
+from django.contrib.sessions.models import Session
+from django.contrib.auth import login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import authenticate, login
 
-# Create your views here.
+  
+def invalid(request, message):
+    return render(request, 'todo/invalid.html', {"message": message})
 
-def index(request,email=None):
-
-    if email is None:
-        return redirect ('invlalid', message='User need to Login-First to see the Tasks')
-    
-    user=User.objects.get(email=email)
-    tasks = user.tasks.all()
-    task_form=taskform()
-    return render(request, 'todo/index.html',{"tasks":tasks, "taskform":task_form})
-
-def invalid(request,message):
-    return render(request, 'todo/invalid.html',{"message":message})
-
-def signup(request):
+def register(request):
     if request.method == 'POST':
-        user_form = SignUpForm(request.POST)
+        user_form = UserRegistartionForm(request.POST)
         if user_form.is_valid():
-            if user_form.cleaned_data['password']!=user_form.cleaned_data['confirm_password']:
-                return redirect ('invlalid', message='password does not match with confirm_password')
-            user=User(
-                        name=user_form.cleaned_data['name'], 
-                        email=user_form.cleaned_data['email'],
-                        password=user_form.cleaned_data['password']
-                    )
-            user.save()
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
             return redirect('login')
     else:
-        user_form = SignUpForm()
-        return render(request, 'todo/signup.html',{'user_form': user_form})
+        user_form = UserRegistartionForm()
+    return render(request, 'todo/register.html', {'user_form': user_form})
 
-def login(request):
-    if request.method == 'POST':
-        user_login_form = loginform(request.POST)
-        if user_login_form.is_valid():
-            email = user_login_form.cleaned_data['email']
-            password = user_login_form.cleaned_data['password']
-            try:
-                user = User.objects.get(email=email)
-                if password==user.password:
-                    return redirect('index', email=user.email)
-                else:
-                    return redirect('invalid', message='Incorrect password')
-            except User.DoesNotExist:
-                return redirect('invalid', message='There is NO user with this Email')
+def user_login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(
+                request, username=data['username'], password=data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                return redirect('invalid', message='Incorrect password')
+    else:
+        form = LoginForm()
+    return render(request, 'todo/login.html', {'form': form})
 
-    user_login_form = loginform()
-    return render(request, 'todo/login.html',{'user_form':user_login_form})
+def logout(request):
+    try:
+        logged_in_user = LoggedInUser.objects.get(user=request.user)
+        logged_in_user.delete()
+    except LoggedInUser.DoesNotExist:
+        pass
 
+    auth_logout(request)
+    return redirect('login')
 
-
-
-
-
-
+ 
+ 
