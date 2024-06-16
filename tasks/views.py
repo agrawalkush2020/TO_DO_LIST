@@ -8,8 +8,9 @@ def index(request):
         if request.method == "POST":
             task_added_form = TaskCreateForm(request.POST)
             if task_added_form.is_valid():
-                task = TaskCreateForm(value=task_added_form.cleaned_data['event'], user=request.user)
-                task.save()
+                task=task_added_form.save(commit=False)
+                task.user=request.user 
+                task_added_form.save()
 
         tasks = Task.objects.filter(user=request.user)
         task_form = TaskCreateForm()

@@ -1,19 +1,37 @@
 {% extends "todo/base.html" %}
 {% block body %}
-    {% for task in tasks%}
-        {{task.value}}
-        <br/>
-    {% endfor %}
-    <form class="shadow-lg p-10" method="POST">
-        {% csrf_token %}
-        <div class="mb-2">
-            <label >Username</label>
-            <div class="border rounded py-2 px-2 mr-10">
-                {{ taskform }}
-            </div>
+    <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h1>To-Do List App</h1>
+        <div style="margin-bottom: 20px;">
+            {% for task in tasks %}
+                <div style="background-color: #f9f9f9; padding: 10px; border-radius: 4px; margin-bottom: 5px;">{{ task.value }}</div>
+            {% endfor %}
         </div>
-        <button class="bg-green-500 text-white px-4 py-2" type="submit">Add</button>
-    </form>
+        <form style="display: flex; align-items: center; margin-bottom: 10px;" method="POST">
+            {% csrf_token %}
+            <input style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #ccc; margin-right: 10px;" type="text" name="value" placeholder="Enter task">
+            <button style="background-color: #4caf50; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;" type="submit">Add</button>
+        </form>
+    </div>
+{% endblock %}
 
-{%endblock%}
 
+{% comment %} -------------
+{% extends "todo/base.html" %}
+{% block body %}
+{% for task in tasks%}
+{{task.value}}
+<br/>
+{% endfor %}
+<form class="shadow-lg p-10" method="POST">
+{% csrf_token %}
+<div class="mb-2">
+<label >Username</label>
+<div class="border rounded py-2 px-2 mr-10">
+{{ taskform }}
+</div>
+</div>
+<button class="bg-green-500 text-white px-4 py-2" type="submit">Add</button>
+</form>
+
+{%endblock%} {% endcomment %}
