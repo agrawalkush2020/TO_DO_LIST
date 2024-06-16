@@ -1,13 +1,11 @@
-from django.utils import timezone
 from django.shortcuts import redirect, render
 from .forms import LoginForm, UserRegistartionForm
-from django.contrib.sessions.models import Session
-from django.contrib.auth import login
 from django.contrib.auth import authenticate, login
 
   
 def invalid(request, message):
     return render(request, 'todo/invalid.html', {"message": message})
+
 
 def register(request):
     if request.method == 'POST':
@@ -20,6 +18,7 @@ def register(request):
     else:
         user_form = UserRegistartionForm()
     return render(request, 'todo/register.html', {'user_form': user_form})
+
 
 def user_login(request):
     if request.method == "POST":

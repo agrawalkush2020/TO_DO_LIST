@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_view
 
 urlpatterns = [
-    path('signup/',views.register,name='signup'),
+    path('signup/', views.register, name='signup'),
     path('login/', views.user_login, name='login'),
-    path('invalid/<str:message>/',views.invalid,name='invalid'),
+    path('invalid/<str:message>/', views.invalid, name='invalid'),
+    path('logout/', auth_view.LogoutView.as_view(template_name='todo/logout.html'), name='logout'),
 ]
